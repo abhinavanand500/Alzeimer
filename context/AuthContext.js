@@ -15,6 +15,7 @@ const authReducer = (state, action) => {
 const signup = dispatch => async ({email, password}) => {
   try {
     const response = await trackerApi.post('/signup', {email, password});
+    console.log(response.data);
     await AsyncStorage.setItem('token', response.data.token);
     dispatch({type: 'signup', payload: response.data.token});
     console.log(response.data);

@@ -10,7 +10,7 @@ const SignupScreen = ({navigation}) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
-  console.log(state);
+  // console.log(state);
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Create an account</Text>
