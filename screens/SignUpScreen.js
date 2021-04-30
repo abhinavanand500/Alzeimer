@@ -3,13 +3,14 @@ import {View, Text, TouchableOpacity, Platform, StyleSheet} from 'react-native';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import SocialButton from '../components/SocialButton';
-// import {AuthContext} from '../navigation/AuthProvider';
+import {Context as AuthContext} from '../context/AuthContext';
 
 const SignupScreen = ({navigation}) => {
+  const {state, signup} = useContext(AuthContext);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
-
+  console.log(state);
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Create an account</Text>
@@ -42,9 +43,13 @@ const SignupScreen = ({navigation}) => {
 
       <FormButton
         buttonTitle="Sign Up"
-        // onPress={() => register(email, password)}
+        onPress={() => signup({email, password})}
       />
-
+      {state.errMessage ? (
+        <Text style={[styles.color_textPrivate, {color: '#e88832'}]}>
+          {state.errMessage}
+        </Text>
+      ) : null}
       <View style={styles.textPrivate}>
         <Text style={styles.color_textPrivate}>
           By registering, you confirm that you accept our{' '}
