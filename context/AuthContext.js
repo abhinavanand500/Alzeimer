@@ -20,7 +20,6 @@ const signup = dispatch => async ({email, password}) => {
     dispatch({type: 'signup', payload: response.data.token});
     console.log(response.data);
   } catch (err) {
-    // console.log(err.message);
     dispatch({
       type: 'add_error',
       payload: 'Something went wrong with signup',
