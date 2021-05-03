@@ -1,9 +1,19 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import React, {useContext} from 'react';
+import {View, Text, Button} from 'react-native';
+// import {Button} from 'react-native-elements';
+import {Context as AuthContext} from '../context/AuthContext';
+import LoginScreen from './LoginScreen';
 const Landing = () => {
+  const signout = useContext(AuthContext);
   return (
     <View>
-      <Text>This is landing page</Text>
+      <Button
+        title="SignOut"
+        onPress={() => {
+          signout;
+          return <LoginScreen />;
+        }}
+      />
     </View>
   );
 };
