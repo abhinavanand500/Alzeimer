@@ -17,10 +17,8 @@ const authReducer = (state, action) => {
 const signup = dispatch => async ({email, password}) => {
   try {
     const response = await trackerApi.post('/signup', {email, password});
-    console.log(response.data);
     await AsyncStorage.setItem('token', response.data.token);
     dispatch({type: 'signin', payload: response.data.token});
-    console.log(response.data);
   } catch (err) {
     dispatch({
       type: 'add_error',
@@ -30,7 +28,6 @@ const signup = dispatch => async ({email, password}) => {
 };
 
 const signin = dispatch => async ({email, password}) => {
-  console.log('Hii');
   try {
     const response = await trackerApi.post('/signin', {email, password});
     await AsyncStorage.setItem('token', response.data.token);
