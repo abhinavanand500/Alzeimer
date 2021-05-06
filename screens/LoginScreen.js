@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  Platform,
   StyleSheet,
   ScrollView,
 } from 'react-native';
@@ -13,15 +12,15 @@ import FormButton from '../components/FormButton';
 import {Context as AuthContext} from '../context/AuthContext';
 import Landing from './Landing';
 import {AsyncStorage} from 'react-native';
-import SocialButton from '../components/SocialButton';
 const LoginScreen = ({navigation}) => {
-  const [email, setEmail] = useState('');
   const {state, signin} = useContext(AuthContext);
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [page, setPage] = useState(null);
   useEffect(() => {
     AsyncStorage.getItem('token').then(value => {
-      if (value === null) {
+      console.log('Val', value);
+      if (value === null || value === '') {
         setPage('Login');
       } else {
         setPage('Landing');
@@ -31,7 +30,6 @@ const LoginScreen = ({navigation}) => {
   if (page === 'Landing') {
     return <Landing />;
   } else if (page === 'Login') {
-    console.log('sa', page);
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Image source={require('../assets/AA.jpg')} style={styles.logo} />
@@ -57,7 +55,7 @@ const LoginScreen = ({navigation}) => {
 
         <FormButton
           buttonTitle="Sign In"
-          onPress={() => signin(email, password)}
+          onPress={() => signin({email, password})}
         />
 
         <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>

@@ -29,28 +29,28 @@ const signup = dispatch => async ({email, password}) => {
   }
 };
 
-const signin = dispatch => {
-  async ({email, password}) => {
-    try {
-      const response = await trackerApi.post('/signin', {email, password});
-      await AsyncStorage.setItem('token', response.data.token);
-      dispatch({type: 'signin', payload: response.data.token});
-    } catch (err) {
-      dispatch({
-        type: 'add_error',
-        payload: 'Something went wrong with signup',
-      });
-    }
-  };
+const signin = dispatch => async ({email, password}) => {
+  console.log('Hii');
+  try {
+    const response = await trackerApi.post('/signin', {email, password});
+    await AsyncStorage.setItem('token', response.data.token);
+    dispatch({type: 'signin', payload: response.data.token});
+  } catch (err) {
+    dispatch({
+      type: 'add_error',
+      payload: 'Something went wrong with signup',
+    });
+  }
 };
 
 const signout = dispatch => async () => {
   await AsyncStorage.removeItem('token');
   dispatch({type: 'signout'});
+  navigate('Login');
 };
 
 export const {Provider, Context} = createDataContext(
   authReducer,
-  {signup, signin, signout},
+  {signin, signout, signup},
   {token: '', errMessage: ''},
 );
