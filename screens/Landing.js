@@ -2,14 +2,14 @@ import React, {useContext} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from './Bottom/Home';
-import Profile from './Bottom/Profile';
-import {Context as AuthContext} from '../context/AuthContext';
+import Account from './Bottom/Account';
+
 import LoginScreen from './LoginScreen';
 import Maps from './Bottom/Maps';
 import Record from './Bottom/Record';
 const Landing = props => {
   const Tab = createBottomTabNavigator();
-  const {signout} = useContext(AuthContext);
+
   return (
     <Tab.Navigator initialRouteName="Home" activeColor="#fff">
       <Tab.Screen
@@ -24,35 +24,33 @@ const Landing = props => {
         }}
       />
       <Tab.Screen
+        name="Explore"
+        component={Record}
+        options={{
+          tabBarLabel: 'Record',
+          tabBarColor: '#d02860',
+          tabBarIcon: ({color}) => (
+            <Icon name="recording" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Notifications"
         component={Maps}
         options={{
           tabBarLabel: 'Updates',
           tabBarColor: '#1f65ff',
-          tabBarIcon: ({color}) => (
-            <Icon name="ios-notifications" color={color} size={26} />
-          ),
+          tabBarIcon: ({color}) => <Icon name="map" color={color} size={26} />,
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="Account"
+        component={Account}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Account',
           tabBarColor: '#694fad',
           tabBarIcon: ({color}) => (
             <Icon name="ios-person" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Explore"
-        component={Record}
-        options={{
-          tabBarLabel: 'Explore',
-          tabBarColor: '#d02860',
-          tabBarIcon: ({color}) => (
-            <Icon name="ios-aperture" color={color} size={26} />
           ),
         }}
       />
