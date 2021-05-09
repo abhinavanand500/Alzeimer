@@ -18,7 +18,7 @@ const Map = () => {
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
       }}>
-      <Polyline coordinates={points} />
+      {/* <Polyline coordinates={points} /> */}
     </MapView>
   );
 };
