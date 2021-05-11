@@ -10,7 +10,9 @@ const Record = () => {
   const startWatching = async () => {
     try {
       const success = position => {
-        console.log(position);
+        // console.log(position);
+        setLongitude(position.coords.longitude);
+        setLatitude(position.coords.latitude);
       };
       const error = err => {
         console.log(err);
@@ -32,7 +34,7 @@ const Record = () => {
   return (
     <SafeAreaView forceInset={{top: 'always'}}>
       <Text h2>Start Tracking</Text>
-      <Maps />
+      <Maps longitude={longitude} latitude={latitude} />
       {err ? <Text>Please Enable location services</Text> : null}
     </SafeAreaView>
   );
