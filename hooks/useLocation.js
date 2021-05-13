@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect, useContext} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 
@@ -25,7 +26,7 @@ export default (shouldTrack, callback) => {
     if (shouldTrack) {
       startWatching();
     } else {
-      //startWatching
+      //stWatching
       Geolocation.clearWatch(subscriber);
       setSubscriber(null);
     }

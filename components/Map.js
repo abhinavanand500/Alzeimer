@@ -6,7 +6,7 @@ const Map = () => {
   const {
     state: {currentLocation},
   } = useContext(LocationContext);
-  console.log('State', currentLocation);
+  // console.log('State', currentLocation);
   if (!currentLocation) {
     return <ActivityIndicator size="large" style={{marginTop: 200}} />;
   }
