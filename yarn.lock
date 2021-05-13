@@ -6692,6 +6692,11 @@
   "resolved" "https://registry.npmjs.org/react-native-screens/-/react-native-screens-3.1.1.tgz"
   "version" "3.1.1"
 
+"react-native-share@^6.0.1":
+  "integrity" "sha512-K7mw2ep4cg++K6GUab32Kic3DeDUveonsQhTElwb6pZyjp0R/TLGQ11+pxcZBVlTiZhdOttyrLdCA6TsMX1lzg=="
+  "resolved" "https://registry.npmjs.org/react-native-share/-/react-native-share-6.0.1.tgz"
+  "version" "6.0.1"
+
 "react-native-size-matters@^0.3.1":
   "integrity" "sha512-mKOfBLIBFBcs9br1rlZDvxD5+mAl8Gfr5CounwJtxI6Z82rGrMO+Kgl9EIg3RMVf3G855a85YVqHJL2f5EDRlw=="
   "resolved" "https://registry.npmjs.org/react-native-size-matters/-/react-native-size-matters-0.3.1.tgz"

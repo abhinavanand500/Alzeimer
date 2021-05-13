@@ -19,7 +19,7 @@ const LoginScreen = ({navigation}) => {
   const [page, setPage] = useState(null);
   useEffect(() => {
     AsyncStorage.getItem('token').then(value => {
-      console.log('Val', value);
+      // console.log('Val', value);
       if (value === null || value === '') {
         setPage('Login');
       } else {
