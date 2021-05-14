@@ -27,9 +27,16 @@ export default (shouldTrack, callback) => {
       startWatching();
     } else {
       //stWatching
-      Geolocation.clearWatch(subscriber);
-      setSubscriber(null);
+      if (subscriber) {
+        Geolocation.clearWatch(subscriber);
+        setSubscriber(null);
+      }
     }
-  }, [shouldTrack]);
+    return () => {
+      if (subscriber) {
+        Geolocation.clearWatch(subscriber);
+      }
+    };
+  }, [shouldTrack, callback]);
   return [err];
 };

@@ -1,4 +1,5 @@
-import React, {useContext, useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useContext, useCallback} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text} from 'react-native-elements';
 import {SafeAreaView} from 'react-navigation';
@@ -10,9 +11,13 @@ import TrackForm from '../../components/TrackForm';
 const Record = () => {
   const {state, addLocation} = useContext(LocationContext);
   const isFocused = useIsFocused();
-  const [err] = useLocation(isFocused, location => {
-    addLocation(location, state.recording);
-  });
+  const callback = useCallback(
+    location => {
+      addLocation(location, state.recording);
+    },
+    [state.recording],
+  );
+  const [err] = useLocation(isFocused, callback);
   return (
     <SafeAreaView forceInset={{top: 'always'}}>
       <View style={styles.container}>
