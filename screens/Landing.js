@@ -3,8 +3,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from './Bottom/Home';
 import Account from './Bottom/Account';
-
-import LoginScreen from './LoginScreen';
 import Maps from './Bottom/Maps';
 import Record from './Bottom/Record';
 const Landing = props => {

@@ -17,7 +17,7 @@ const Record = () => {
     },
     [state.recording],
   );
-  const [err] = useLocation(isFocused, callback);
+  const [err] = useLocation(isFocused || state.recording, callback);
   return (
     <SafeAreaView forceInset={{top: 'always'}}>
       <View style={styles.container}>
