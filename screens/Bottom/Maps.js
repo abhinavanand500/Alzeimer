@@ -15,7 +15,6 @@ const Maps = ({navigation}) => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    console.log('Hiiiii');
     if (isFocused) {
       fetchTracks();
     }
@@ -34,7 +33,7 @@ const Maps = ({navigation}) => {
             return (
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate('TrackDetails', {_id: item.id})
+                  navigation.navigate('TrackDetails', {_id: item._id})
                 }>
                 <ListItem>
                   <ListItem.Content>
