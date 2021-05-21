@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import {AsyncStorage} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -59,7 +59,12 @@ const AuthStack = () => {
             elevation: 0,
           },
           headerLeft: () => (
-            <View style={{marginLeft: 10}}>
+            <View
+              style={{
+                marginLeft: 10,
+                display: 'flex',
+                flexDirection: 'row',
+              }}>
               <FontAwesome.Button
                 name="long-arrow-left"
                 size={25}
@@ -67,6 +72,7 @@ const AuthStack = () => {
                 color="#333"
                 onPress={() => navigation.navigate('Notifications')}
               />
+              <Text style={{fontSize: 25}}>Go Back</Text>
             </View>
           ),
         })}

@@ -1,16 +1,37 @@
-import React, {useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
 import MapView, {Polyline, Circle} from 'react-native-maps';
 import {Context as LocationContext} from '../context/LocationContext';
 const Map = () => {
+  const [data, dataSet] = useState(null);
+  // useEffect(() => {
+  //   async function fetchMyAPI() {
+  //     await Geolocation.getCurrentPosition(info => dataSet(info));
+  //   }
+  //   fetchMyAPI();
+  // }, []);
+
   const {
     state: {currentLocation, locations},
   } = useContext(LocationContext);
-  console.log(currentLocation);
+  // if (locations[0] && locations.length < 5) {
+  //   const start = locations[0];
+  //   console.log(start);
+  // }
+  if (locations[0]) {
+    const start = locations[0];
+    const last = locations[locations.length - 1];
+    console.log('Start', start);
+    console.log('Last', last);
+  }
+
   if (!currentLocation) {
     return <ActivityIndicator size="large" style={{marginTop: 200}} />;
   }
-  // console.log('location', locations);
+  // console.log(start);
+  // dataSet(currentLocation);
+
   return (
     <MapView
       style={styles.map}
