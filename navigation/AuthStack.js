@@ -5,6 +5,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {createStackNavigator} from '@react-navigation/stack';
 import OnBoarding from '../screens/OnBoarding';
 import LoginScreen from '../screens/LoginScreen';
+import TrackDetails from '../screens/TrackDetails';
 import SignUpScreen from '../screens/SignUpScreen';
 import Landing from '../screens/Landing';
 const Stack = createStackNavigator();
@@ -46,6 +47,29 @@ const AuthStack = () => {
         name="Landing"
         component={Landing}
         options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="TrackDetails"
+        component={TrackDetails}
+        options={({navigation}) => ({
+          title: '',
+          headerStyle: {
+            backgroundColor: '#f9fafd',
+            shadowColor: '#f9fafd',
+            elevation: 0,
+          },
+          headerLeft: () => (
+            <View style={{marginLeft: 10}}>
+              <FontAwesome.Button
+                name="long-arrow-left"
+                size={25}
+                backgroundColor="#f9fafd"
+                color="#333"
+                onPress={() => navigation.navigate('Notifications')}
+              />
+            </View>
+          ),
+        })}
       />
       <Stack.Screen
         name="Signup"

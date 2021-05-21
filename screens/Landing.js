@@ -36,7 +36,7 @@ const Landing = props => {
         name="Notifications"
         component={Maps}
         options={{
-          tabBarLabel: 'Updates',
+          tabBarLabel: 'Notifications',
           tabBarColor: '#1f65ff',
           tabBarIcon: ({color}) => <Icon name="map" color={color} size={26} />,
         }}
