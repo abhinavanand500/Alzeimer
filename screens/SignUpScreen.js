@@ -8,6 +8,7 @@ import {Context as AuthContext} from '../context/AuthContext';
 const SignupScreen = ({navigation}) => {
   const {state, signup} = useContext(AuthContext);
   const [email, setEmail] = useState();
+  const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   // console.log(state);
@@ -40,10 +41,19 @@ const SignupScreen = ({navigation}) => {
         iconType="lock"
         secureTextEntry={true}
       />
+      <FormInput
+        labelValue={phone}
+        onChangeText={userPhone => setPhone(userPhone)}
+        placeholderText="Phone Number"
+        iconType="phone"
+        keyboardType="email-address"
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
 
       <FormButton
         buttonTitle="Sign Up"
-        onPress={() => signup({email, password})}
+        onPress={() => signup({email, password, phone})}
       />
       {state.errMessage ? (
         <Text style={[styles.color_textPrivate, {color: '#e88832'}]}>
