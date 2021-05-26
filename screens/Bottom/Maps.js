@@ -5,6 +5,7 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import {Text} from 'react-native-elements';
@@ -25,27 +26,30 @@ const Maps = ({navigation}) => {
       <View style={styles.container}>
         <Text h2>Hii Maps</Text>
       </View>
-      <View style={styles.list}>
-        <FlatList
-          data={state}
-          keyExtractor={item => item._id}
-          renderItem={({item}) => {
-            return (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('TrackDetails', {_id: item._id})
-                }>
-                <ListItem>
-                  <ListItem.Content>
-                    <ListItem.Title>{item.name}</ListItem.Title>
-                  </ListItem.Content>
-                  <ListItem.Chevron />
-                </ListItem>
-              </TouchableOpacity>
-            );
-          }}
-        />
-      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.list}>
+          <FlatList
+            // style={{flex: 1}}
+            data={state}
+            keyExtractor={item => item._id}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('TrackDetails', {_id: item._id})
+                  }>
+                  <ListItem>
+                    <ListItem.Content>
+                      <ListItem.Title>{item.name}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                  </ListItem>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

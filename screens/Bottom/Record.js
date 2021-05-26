@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useContext, useCallback} from 'react';
+import React, {useContext, useCallback, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text} from 'react-native-elements';
 import {SafeAreaView} from 'react-navigation';
@@ -9,8 +9,15 @@ import {Context as LocationContext} from '../../context/LocationContext';
 import Maps from '../../components/Map';
 import TrackForm from '../../components/TrackForm';
 const Record = () => {
-  const {state, addLocation} = useContext(LocationContext);
+  const {state, addLocation, getUser} = useContext(LocationContext);
   const isFocused = useIsFocused();
+  useEffect(() => {
+    const aa = async () => {
+      await getUser();
+    };
+    aa();
+  }, []);
+  // console.log(state.user.phone);
   const callback = useCallback(
     location => {
       addLocation(location, state.recording);
@@ -23,7 +30,7 @@ const Record = () => {
       <View style={styles.container}>
         <Text h2>Start Tracking</Text>
       </View>
-      <Maps />
+      <Maps phone={state.user.phone} />
       {err ? <Text>Please Enable location services</Text> : null}
       <TrackForm />
     </SafeAreaView>

@@ -5,7 +5,8 @@ import Home from './Bottom/Home';
 import Account from './Bottom/Account';
 import Maps from './Bottom/Maps';
 import Record from './Bottom/Record';
-const Landing = props => {
+const Landing = () => {
+  // const {state, signin} = useContext(AuthContext);
   const Tab = createBottomTabNavigator();
 
   return (

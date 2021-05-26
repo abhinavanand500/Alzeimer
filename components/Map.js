@@ -3,24 +3,15 @@ import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import MapView, {Polyline, Circle} from 'react-native-maps';
 import {Context as LocationContext} from '../context/LocationContext';
-const Map = () => {
-  const [dist, setDistance] = useState(0);
-  // useEffect(() => {
-  //   async function fetchMyAPI() {
-  //     await Geolocation.getCurrentPosition(info => dataSet(info));
-  //   }
-  //   fetchMyAPI();
-  // }, []);
+const Map = ({phone}) => {
+  if (phone) {
+    console.log(phone);
+  }
   const distance = (lat1, lat2, lon1, lon2) => {
-    // The math module contains a function
-    // named toRadians which converts from
-    // degrees to radians.
     lon1 = (lon1 * Math.PI) / 180;
     lon2 = (lon2 * Math.PI) / 180;
     lat1 = (lat1 * Math.PI) / 180;
     lat2 = (lat2 * Math.PI) / 180;
-
-    // Haversine formula
     let dlon = lon2 - lon1;
     let dlat = lat2 - lat1;
     let a =
@@ -42,21 +33,19 @@ const Map = () => {
     const last = locations[locations.length - 1];
     console.log('Start', start);
     console.log('Last', last);
-    setDistance(
-      distance(
-        start.coords.latitude,
-        last.coords.latitude,
-        start.coords.longitude,
-        last.coords.longitude,
-      ),
+
+    const dist = distance(
+      start.coords.latitude,
+      last.coords.latitude,
+      start.coords.longitude,
+      last.coords.longitude,
     );
+    console.log('Distance ', dist);
   }
 
   if (!currentLocation) {
     return <ActivityIndicator size="large" style={{marginTop: 200}} />;
   }
-  // console.log(start);
-  // dataSet(currentLocation);
 
   return (
     <MapView

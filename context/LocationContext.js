@@ -1,3 +1,5 @@
+import trackerApi from '../apis/tracker';
+
 import createDataContext from './createDataContext';
 const locationReducer = (state, action) => {
   switch (action.type) {
@@ -11,6 +13,8 @@ const locationReducer = (state, action) => {
       return {...state, locations: [...state.locations, action.payload]};
     case 'change_name':
       return {...state, name: action.payload};
+    case 'get_user':
+      return {...state, user: action.payload};
     case 'reset':
       return {...state, name: '', locations: []};
     default:
@@ -37,9 +41,20 @@ const addLocation = dispatch => (location, recording) => {
 const reset = dispatch => () => {
   dispatch({type: 'reset'});
 };
+const getUser = dispatch => async () => {
+  try {
+    const response = await trackerApi.get('/getdetails');
+    dispatch({type: 'get_user', payload: response.data});
+  } catch (err) {
+    dispatch({
+      type: 'add_error',
+      payload: 'Something went wrong with signup',
+    });
+  }
+};
 
 export const {Context, Provider} = createDataContext(
   locationReducer,
-  {startRecording, stopRecording, addLocation, changeName, reset},
-  {name: '', recording: false, locations: [], currentLocation: null},
+  {startRecording, stopRecording, addLocation, changeName, reset, getUser},
+  {name: '', recording: false, locations: [], currentLocation: null, user: {}},
 );
