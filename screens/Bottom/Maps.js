@@ -26,30 +26,30 @@ const Maps = ({navigation}) => {
       <View style={styles.container}>
         <Text h2>Hii Maps</Text>
       </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.list}>
-          <FlatList
-            // style={{flex: 1}}
-            data={state}
-            keyExtractor={item => item._id}
-            renderItem={({item}) => {
-              return (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('TrackDetails', {_id: item._id})
-                  }>
-                  <ListItem>
-                    <ListItem.Content>
-                      <ListItem.Title>{item.name}</ListItem.Title>
-                    </ListItem.Content>
-                    <ListItem.Chevron />
-                  </ListItem>
-                </TouchableOpacity>
-              );
-            }}
-          />
-        </View>
-      </ScrollView>
+      {/* <ScrollView showsVerticalScrollIndicator={false}> */}
+      <View style={styles.list}>
+        <FlatList
+          // style={{flex: 1}}
+          data={state}
+          keyExtractor={item => item._id}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('TrackDetails', {_id: item._id})
+                }>
+                <ListItem>
+                  <ListItem.Content>
+                    <ListItem.Title>{item.name}</ListItem.Title>
+                  </ListItem.Content>
+                  <ListItem.Chevron />
+                </ListItem>
+              </TouchableOpacity>
+            );
+          }}
+        />
+      </View>
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };
