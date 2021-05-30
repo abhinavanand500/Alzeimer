@@ -4,9 +4,9 @@ import Geolocation from '@react-native-community/geolocation';
 import MapView, {Polyline, Circle} from 'react-native-maps';
 import {Context as LocationContext} from '../context/LocationContext';
 const Map = ({phone}) => {
-  if (phone) {
-    console.log(phone);
-  }
+  // if (phone) {
+
+  // }
   const distance = (lat1, lat2, lon1, lon2) => {
     lon1 = (lon1 * Math.PI) / 180;
     lon2 = (lon2 * Math.PI) / 180;
@@ -27,7 +27,7 @@ const Map = ({phone}) => {
   const {
     state: {currentLocation, locations},
   } = useContext(LocationContext);
-
+  console.log(currentLocation);
   if (locations[0]) {
     const start = locations[0];
     const last = locations[locations.length - 1];

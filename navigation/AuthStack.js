@@ -8,6 +8,7 @@ import LoginScreen from '../screens/LoginScreen';
 import TrackDetails from '../screens/TrackDetails';
 import SignUpScreen from '../screens/SignUpScreen';
 import Landing from '../screens/Landing';
+import EditProfileScreen from '../screens/Bottom/EditProfileScreen';
 const Stack = createStackNavigator();
 
 const AuthStack = () => {
@@ -76,6 +77,20 @@ const AuthStack = () => {
             </View>
           ),
         })}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{
+          headerTitle: 'Edit Profile',
+          headerBackTitleVisible: false,
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#fff',
+            shadowColor: '#fff',
+            elevation: 0,
+          },
+        }}
       />
       <Stack.Screen
         name="Signup"

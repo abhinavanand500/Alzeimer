@@ -15,7 +15,7 @@ export default (shouldTrack, callback) => {
       const sub = await Geolocation.watchPosition(callback, error, {
         enableHighAccuracy: true,
         timeout: 5000,
-        distanceFilter: 2,
+        distanceFilter: 0.5,
       });
       setSubscriber(sub);
     } catch (e) {
