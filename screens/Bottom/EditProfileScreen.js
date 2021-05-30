@@ -11,140 +11,36 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
+import UserAvatar from 'react-native-user-avatar';
 import {Context as UserContext} from '../../context/UserContext';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import FormButton from '../../components/FormButton';
 import Animated from 'react-native-reanimated';
-import BottomSheet from 'reanimated-bottom-sheet';
-const EditProfileScreen = () => {
-  const {state, getInfoUser} = useContext(UserContext);
+
+const EditProfileScreen = props => {
+  // console.log(props);
+  const [userData, setUserData] = useState({});
+  const {state, getInfoUser, updateUser} = useContext(UserContext);
   useEffect(() => {
     const aa = async () => {
       await getInfoUser();
     };
     aa();
-  }, []);
-  // console.log('State is', state.user);
-  const [image, setImage] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [transferred, setTransferred] = useState(0);
-  const [userData, setUserData] = useState(null);
-
-  const getUser = async () => {
-    //   const currentUser = await firestore()
-    //     .collection('users')
-    //     .doc(user.uid)
-    //     .get()
-    //     .then(documentSnapshot => {
-    //       if (documentSnapshot.exists) {
-    //         console.log('User Data', documentSnapshot.data());
-    //         setUserData(documentSnapshot.data());
-    //       }
-    //     });
-  };
-
-  const handleUpdate = async () => {
-    // let imgUrl = await uploadImage();
-    // if (imgUrl == null && userData.userImg) {
-    //   imgUrl = userData.userImg;
-    // }
-    // firestore()
-    //   .collection('users')
-    //   .doc(user.uid)
-    //   .update({
-    //     fname: userData.fname,
-    //     lname: userData.lname,
-    //     about: userData.about,
-    //     phone: userData.phone,
-    //     country: userData.country,
-    //     city: userData.city,
-    //     userImg: imgUrl,
-    //   })
-    //   .then(() => {
-    //     console.log('User Updated!');
-    //     Alert.alert(
-    //       'Profile Updated!',
-    //       'Your profile has been updated successfully.',
-    //     );
-    //   });
-  };
-
-  const takePhotoFromCamera = () => {
-    ImagePicker.openCamera({
-      compressImageMaxWidth: 300,
-      compressImageMaxHeight: 300,
-      cropping: true,
-      compressImageQuality: 0.7,
-    }).then(image => {
-      console.log(image);
-      const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
-      setImage(imageUri);
-      bs.current.snapTo(1);
-    });
-  };
-
-  const choosePhotoFromLibrary = () => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 300,
-      cropping: true,
-      compressImageQuality: 0.7,
-    }).then(image => {
-      console.log(image);
-      const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
-      setImage(imageUri);
-      bs.current.snapTo(1);
-    });
-  };
-
-  const renderInner = () => (
-    <View style={styles.panel}>
-      <View style={{alignItems: 'center'}}>
-        <Text style={styles.panelTitle}>Upload Photo</Text>
-        <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
-      </View>
-      <TouchableOpacity
-        style={styles.panelButton}
-        onPress={takePhotoFromCamera}>
-        <Text style={styles.panelButtonTitle}>Take Photo</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.panelButton}
-        onPress={choosePhotoFromLibrary}>
-        <Text style={styles.panelButtonTitle}>Choose From Library</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.panelButton}
-        onPress={() => bs.current.snapTo(1)}>
-        <Text style={styles.panelButtonTitle}>Cancel</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
-  const renderHeader = () => (
-    <View style={styles.header}>
-      <View style={styles.panelHeader}>
-        <View style={styles.panelHandle} />
-      </View>
-    </View>
-  );
-
+    setUserData(state.user);
+  }, [state.user.email]);
   const bs = React.createRef();
   const fall = new Animated.Value(1);
 
+  const upadateProfile = () => {
+    if (userData !== {}) {
+      updateUser({userData});
+      props.navigation.navigate('Login');
+    }
+  };
   return (
     <View style={styles.container}>
-      <BottomSheet
-        ref={bs}
-        snapPoints={[330, -5]}
-        renderContent={renderInner}
-        renderHeader={renderHeader}
-        initialSnap={1}
-        callbackNode={fall}
-        enabledGestureInteraction={true}
-      />
       <Animated.View
         style={{
           margin: 20,
@@ -160,38 +56,32 @@ const EditProfileScreen = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <ImageBackground
-                source={{
-                  uri: image
-                    ? image
-                    : userData
-                    ? userData.userImg ||
-                      'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'
-                    : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
-                }}
-                style={{height: 100, width: 100}}
-                imageStyle={{borderRadius: 15}}>
-                <View
+              <UserAvatar
+                size={200}
+                style={styles.userImg}
+                // textStyle={{size: 150}}
+                name={userData.name ? String(userData.name) : 'Abhinav Anand'}
+              />
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <MaterialCommunityIcons
+                  name="camera"
+                  size={35}
+                  color="#fff"
                   style={{
-                    flex: 1,
-                    justifyContent: 'center',
+                    opacity: 0.7,
                     alignItems: 'center',
-                  }}>
-                  <MaterialCommunityIcons
-                    name="camera"
-                    size={35}
-                    color="#fff"
-                    style={{
-                      opacity: 0.7,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderWidth: 1,
-                      borderColor: '#fff',
-                      borderRadius: 10,
-                    }}
-                  />
-                </View>
-              </ImageBackground>
+                    justifyContent: 'center',
+                    borderWidth: 1,
+                    borderColor: '#fff',
+                    borderRadius: 10,
+                  }}
+                />
+              </View>
             </View>
           </TouchableOpacity>
           <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
@@ -203,23 +93,25 @@ const EditProfileScreen = () => {
           <ScrollView>
             <View>
               <View style={styles.action}>
-                <FontAwesome name="user-o" color="#333333" size={20} />
+                <FontAwesome name="user-circle" color="#333333" size={20} />
                 <TextInput
-                  placeholder="First Name"
-                  placeholderTextColor="#666666"
+                  placeholder="Email"
+                  placeholderTextColor="grey"
                   autoCorrect={false}
-                  value={userData ? userData.fname : ''}
-                  onChangeText={txt => setUserData({...userData, fname: txt})}
+                  value={userData.email ? userData.email : state.user.email}
+                  onChangeText={txt => setUserData({...userData, email: txt})}
                   style={styles.textInput}
+                  editable={false}
+                  selectTextOnFocus={false}
                 />
               </View>
               <View style={styles.action}>
                 <FontAwesome name="user-o" color="#333333" size={20} />
                 <TextInput
-                  placeholder="Last Name"
+                  placeholder="Name"
                   placeholderTextColor="#666666"
-                  value={userData ? userData.lname : ''}
-                  onChangeText={txt => setUserData({...userData, lname: txt})}
+                  value={userData.name ? userData.name : state.user.name}
+                  onChangeText={txt => setUserData({...userData, name: txt})}
                   autoCorrect={false}
                   style={styles.textInput}
                 />
@@ -232,7 +124,9 @@ const EditProfileScreen = () => {
                   placeholderTextColor="#666666"
                   keyboardType="number-pad"
                   autoCorrect={false}
-                  value={userData ? userData.phone : ''}
+                  value={
+                    userData.phone ? String(userData.phone) : state.user.phone
+                  }
                   onChangeText={txt => setUserData({...userData, phone: txt})}
                   style={styles.textInput}
                 />
@@ -244,8 +138,11 @@ const EditProfileScreen = () => {
                   placeholder="Maximum Distance you want to travel"
                   placeholderTextColor="#666666"
                   autoCorrect={false}
-                  value={userData ? userData.country : ''}
-                  onChangeText={txt => setUserData({...userData, country: txt})}
+                  keyboardType="number-pad"
+                  value={
+                    userData.dist ? String(userData.dist) : state.user.dist
+                  }
+                  onChangeText={txt => setUserData({...userData, dist: txt})}
                   style={styles.textInput}
                 />
               </View>
@@ -259,7 +156,7 @@ const EditProfileScreen = () => {
                   placeholder="City"
                   placeholderTextColor="#666666"
                   autoCorrect={false}
-                  value={userData ? userData.city : ''}
+                  value={userData.city ? userData.city : state.user.city}
                   onChangeText={txt => setUserData({...userData, city: txt})}
                   style={styles.textInput}
                 />
@@ -267,7 +164,7 @@ const EditProfileScreen = () => {
             </View>
           </ScrollView>
         </KeyboardAvoidingView>
-        <FormButton buttonTitle="Update" onPress={handleUpdate} />
+        <FormButton buttonTitle="Update" onPress={upadateProfile} />
       </Animated.View>
     </View>
   );
@@ -292,6 +189,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     paddingTop: 20,
     width: '100%',
+  },
+  userImg: {
+    marginTop: 10,
+    height: 150,
+    width: 150,
+    borderRadius: 75,
   },
   header: {
     backgroundColor: '#FFFFFF',

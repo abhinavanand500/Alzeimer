@@ -3,7 +3,8 @@ import createDataContext from './createDataContext';
 const userReducer = (state, action) => {
   switch (action.type) {
     case 'get_user':
-      console.log(action.payload);
+      return {...state, user: action.payload};
+    case 'update':
       return {...state, user: action.payload};
     default:
       return state;
@@ -11,9 +12,8 @@ const userReducer = (state, action) => {
 };
 
 const getInfoUser = dispatch => async () => {
-  console.log('Getingins');
   try {
-    const response = await trackerApi.get('/getdetails');
+    const response = await trackerApi.get('/operationUser');
     dispatch({type: 'get_user', payload: response.data});
   } catch (err) {
     dispatch({
@@ -23,8 +23,23 @@ const getInfoUser = dispatch => async () => {
   }
 };
 
+const updateUser = dispatch => async ({userData}) => {
+  try {
+    const response = await trackerApi.put('/operationUser', {
+      userData,
+    });
+    console.log(response);
+    dispatch({type: 'update', payload: userData});
+  } catch (err) {
+    dispatch({
+      type: 'add_error',
+      payload: 'Something went wrong while changing',
+    });
+  }
+};
+
 export const {Context, Provider} = createDataContext(
   userReducer,
-  {getInfoUser},
+  {getInfoUser, updateUser},
   {user: {}},
 );
