@@ -1,69 +1,73 @@
-// import React from 'react';
-// import {View, Text} from 'react-native';
-
-// const Home = () => {
-//   return (
-//     <View>
-//       <Text>Hii Home</Text>
-//     </View>
-//   );
-// };
-
-// export default Home;
 import React from 'react';
-import {
-  View,
-  KeyboardAvoidingView,
-  TextInput,
-  StyleSheet,
-  Text,
-  Platform,
-  TouchableWithoutFeedback,
-  Button,
-  Keyboard,
-} from 'react-native';
+import {View, Image, StyleSheet, ScrollView} from 'react-native';
+import {Text} from 'react-native-elements';
+import Welcome from '../../assets/Welcome.svg';
+import Location from '../../assets/Location.svg';
+import {windowHeight, windowWidth} from '../../utils/Dimension';
 
 const Home = () => {
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.inner}>
-          <Text style={styles.header}>Header</Text>
-          <TextInput placeholder="Username" style={styles.textInput} />
-          <View style={styles.btnContainer}>
-            <Button title="Submit" onPress={() => null} />
-          </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text h4 style={styles.textUp}>
+          Welcome To Tracker App
+        </Text>
+        <Welcome
+          height={windowHeight / 2}
+          width={windowWidth / 1.2}
+          style={styles.welcome}
+          fill="#000"
+        />
+      </View>
+      <View style={styles.innercontainer}>
+        <Text h2 style={styles.heading}>
+          OUR MOTIVE
+        </Text>
+        <View style={styles.image}>
+          <Location
+            height={windowHeight / 2}
+            width={windowWidth / 1.2}
+            style={styles.welcome}
+            fill="#000"
+          />
         </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+        <View style={styles.text}>
+          <Text h4 style={styles.content}>
+            This app is created in order to track any person and alert the
+            family members, if that person tries to go outside certain area
+          </Text>
+        </View>
+      </View>
+    </ScrollView>
   );
 };
-
 const styles = StyleSheet.create({
+  heading: {
+    textAlign: 'center',
+    fontWeight: '900',
+  },
+  innercontainer: {
+    margin: 20,
+  },
+  content: {
+    fontWeight: '500',
+  },
+  welcome: {
+    height: 30,
+    resizeMode: 'center',
+    width: 30,
+    flex: 1,
+    aspectRatio: 1,
+  },
+  textUp: {
+    margin: 10,
+    padding: 20,
+    borderRadius: 40,
+    backgroundColor: 'orange',
+    color: 'green',
+  },
   container: {
-    flex: 1,
-  },
-  inner: {
-    padding: 24,
-    flex: 1,
-    justifyContent: 'space-around',
-  },
-  header: {
-    fontSize: 36,
-    marginBottom: 48,
-  },
-  textInput: {
-    height: 40,
-    borderColor: '#000000',
-    borderBottomWidth: 1,
-    marginBottom: 36,
-  },
-  btnContainer: {
-    backgroundColor: 'white',
-    marginTop: 12,
+    alignItems: 'center',
   },
 });
-
 export default Home;
