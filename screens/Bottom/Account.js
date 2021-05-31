@@ -1,6 +1,8 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {Context as AuthContext} from '../../context/AuthContext';
 import UserAvatar from 'react-native-user-avatar';
+import {windowHeight, windowWidth} from '../../utils/Dimension';
+import Profile from '../../assets/Profile.svg';
 import {
   View,
   Text,
@@ -10,32 +12,36 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
-import FormButton from '../../components/FormButton';
+import {Context as UserContext} from '../../context/UserContext';
 const Account = ({navigation, route}) => {
+  const [userData, setUserData] = useState({});
   const {state, signout} = useContext(AuthContext);
-
+  const {
+    state: {user},
+    getInfoUser,
+  } = useContext(UserContext);
+  useEffect(() => {
+    const aa = async () => {
+      await getInfoUser();
+    };
+    aa();
+    setUserData(user);
+  }, [user.email]);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleted, setDeleted] = useState(false);
-  const [userData, setUserData] = useState(null);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
         showsVerticalScrollIndicator={false}>
-        <UserAvatar
-          size={200}
-          style={styles.userImg}
-          // textStyle={{size: 150}}
-          name="Avishay Bar"
-        />
+        <UserAvatar size={200} style={styles.userImg} name="Avishay Bar" />
         <Text style={styles.userName}>
-          {userData ? userData.fname || 'Test' : 'Test'}{' '}
-          {userData ? userData.lname || 'User' : 'User'}
+          {userData ? userData.name || 'Test' : 'Test'}{' '}
         </Text>
         <Text style={styles.aboutUser}>
-          {userData ? userData.about || 'No details added.' : ''}
+          {userData ? userData.phone || 'No details added.' : ''}
         </Text>
         <View style={styles.userBtnWrapper}>
           {route.params ? (
@@ -70,22 +76,24 @@ const Account = ({navigation, route}) => {
 
         <View style={styles.userInfoWrapper}>
           <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>{posts.length}</Text>
-            <Text style={styles.userInfoSubTitle}>Posts</Text>
+            <Text style={styles.userInfoTitle}>{user.dist}</Text>
+            <Text style={styles.userInfoSubTitle}>KM</Text>
           </View>
           <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>10,000</Text>
-            <Text style={styles.userInfoSubTitle}>Followers</Text>
+            <Text style={styles.userInfoTitle}>{user.city}</Text>
+            <Text style={styles.userInfoSubTitle}>CITY</Text>
           </View>
           <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>100</Text>
-            <Text style={styles.userInfoSubTitle}>Following</Text>
+            <Text style={styles.userInfoTitle}>Trial</Text>
+            <Text style={styles.userInfoSubTitle}>Version</Text>
           </View>
         </View>
-
-        {/* {posts.map(item => (
-          <PostCard key={item.id} item={item} onDelete={handleDelete} />
-        ))} */}
+        <Profile
+          height={windowHeight / 2}
+          width={windowWidth / 1.2}
+          style={styles.welcome}
+          fill="#000"
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -116,6 +124,13 @@ const styles = StyleSheet.create({
     color: '#666',
     textAlign: 'center',
     marginBottom: 10,
+  },
+  welcome: {
+    height: 30,
+    resizeMode: 'center',
+    width: 30,
+    flex: 1,
+    aspectRatio: 1,
   },
   userBtnWrapper: {
     flexDirection: 'row',

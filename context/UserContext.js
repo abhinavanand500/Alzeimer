@@ -28,7 +28,7 @@ const updateUser = dispatch => async ({userData}) => {
     const response = await trackerApi.put('/operationUser', {
       userData,
     });
-    console.log(response);
+    // console.log(response);
     dispatch({type: 'update', payload: userData});
   } catch (err) {
     dispatch({
