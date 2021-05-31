@@ -7,10 +7,12 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import {windowHeight, windowWidth} from '../utils/Dimension';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import {Context as AuthContext} from '../context/AuthContext';
 import Landing from './Landing';
+import Lost from '../assets/lost.svg';
 import {AsyncStorage} from 'react-native';
 const LoginScreen = ({navigation}) => {
   const {state, signin} = useContext(AuthContext);
@@ -32,7 +34,12 @@ const LoginScreen = ({navigation}) => {
   } else if (page === 'Login') {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <Image source={require('../assets/AA.jpg')} style={styles.logo} />
+        {/* <Image source={require('../assets/AA.jpg')} style={styles.logo} /> */}
+        <Lost
+          style={styles.logo}
+          height={windowHeight / 5}
+          width={windowWidth / 2}
+        />
         <Text style={styles.text}>Location Tracker App</Text>
 
         <FormInput
