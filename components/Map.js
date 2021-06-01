@@ -1,12 +1,20 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useEffect, useContext} from 'react';
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
-import Geolocation from '@react-native-community/geolocation';
 import MapView, {Polyline, Circle} from 'react-native-maps';
 import {Context as LocationContext} from '../context/LocationContext';
-const Map = ({phone}) => {
-  // if (phone) {
-
-  // }
+import {Context as UserContext} from '../context/UserContext';
+const Map = () => {
+  const {state, getInfoUser} = useContext(UserContext);
+  const {
+    state: {currentLocation, locations},
+    sendLocation,
+  } = useContext(LocationContext);
+  useEffect(() => {
+    const aa = async () => {
+      await getInfoUser();
+    };
+    aa();
+  }, [state.user.email]);
   const distance = (lat1, lat2, lon1, lon2) => {
     lon1 = (lon1 * Math.PI) / 180;
     lon2 = (lon2 * Math.PI) / 180;
@@ -24,24 +32,27 @@ const Map = ({phone}) => {
 
     return c * r;
   };
-  const {
-    state: {currentLocation, locations},
-  } = useContext(LocationContext);
-  console.log(currentLocation);
+
+  // console.log('From map', state.user.dist);
   if (locations[0]) {
     const start = locations[0];
     const last = locations[locations.length - 1];
-    console.log('Start', start);
-    console.log('Last', last);
-
     const dist = distance(
       start.coords.latitude,
       last.coords.latitude,
       start.coords.longitude,
       last.coords.longitude,
     );
-    console.log('Distance ', dist);
-  }
+    // console.log('Last', last);
+    // console.log('Cur', currentLocation);
+    if (
+      dist > state.user.dist &&
+      last.coords.latitude === currentLocation.coords.latitude &&
+      last.coords.longitude === currentLocation.coords.longitude
+    ) {
+      console.log('Distance at last', dist);
+      sendLocation({currentLocation, dist});
+    }
 
   if (!currentLocation) {
     return <ActivityIndicator size="large" style={{marginTop: 200}} />;
