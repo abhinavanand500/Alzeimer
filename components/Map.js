@@ -53,7 +53,7 @@ const Map = () => {
       console.log('Distance at last', dist);
       sendLocation({currentLocation, dist});
     }
-
+  }
   if (!currentLocation) {
     return <ActivityIndicator size="large" style={{marginTop: 200}} />;
   }
