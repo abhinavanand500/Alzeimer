@@ -19,7 +19,7 @@ const locationReducer = (state, action) => {
     case 'reset':
       return {...state, name: '', locations: []};
     case 'nothing_user':
-      return state
+      return state;
     default:
       return state;
   }
@@ -57,11 +57,12 @@ const getUser = dispatch => async () => {
 };
 
 const sendLocation = dispatch => async ({currentLocation, dist}) => {
-  // console.log('From Context', currentLocation, dist);
   try {
-    const response = await trackerApi.post('/sendMessage', {currentLocation, dist});
+    const response = await trackerApi.post('/sendMessage', {
+      currentLocation,
+      dist,
+    });
     dispatch({type: 'nothing_user', payload: response});
-    // console.log("Hey",response);
   } catch (err) {
     dispatch({
       type: 'add_error',
